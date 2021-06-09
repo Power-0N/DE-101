@@ -1,3 +1,5 @@
+create schema dwh;
+
 drop table if exists dwh.calendar_dim;
 
 CREATE TABLE dwh.calendar_dim
@@ -53,7 +55,7 @@ truncate table dwh.shipping_dim;
 
 --generating ship_id and inserting ship_mode from orders
 insert into dwh.shipping_dim 
-select 100+row_number() over(), ship_mode from (select distinct ship_mode from public.orders ) a;
+select 100+row_number() over(), ship_mode from (select distinct ship_mode from stg.orders ) a;
 --checking
 select * from dwh.shipping_dim; 
 
@@ -78,7 +80,7 @@ truncate table dwh.geo_dim;
 
 --inserting geo data from orders
 insert into dwh.geo_dim 
-select 100+row_number() over(), country, state, city, postal_code  from (select distinct country, state, city, coalesce(postal_code,0) as postal_code from public.orders ) a;
+select 100+row_number() over(), country, state, city, postal_code  from (select distinct country, state, city, postal_code from stg.orders ) a;
 --checking
 select * from dwh.geo_dim; 
 
@@ -103,7 +105,7 @@ truncate table dwh.customers_dim;
 
 --inserting geo data from orders
 insert into dwh.customers_dim 
-select 100+row_number() over(), customer_id, customer_name, segment  from (select distinct customer_id, customer_name, segment from public.orders ) a;
+select 100+row_number() over(), customer_id, customer_name, segment  from (select distinct customer_id, customer_name, segment from stg.orders ) a;
 --checking
 select * from dwh.customers_dim; 
 
