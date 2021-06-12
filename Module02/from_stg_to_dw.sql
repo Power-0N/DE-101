@@ -239,4 +239,7 @@ select count(*) from dwh.sales_fact sf
 inner join dwh.shipping_dim s on sf.ship_id=s.ship_id
 inner join dwh.geo_dim g on sf.geo_id=g.geo_id
 inner join dwh.products_dim p on sf.product_id=p.product_id
-inner join dwh.customers_dim cd on sf.cust_id=cd.cust_id;
+inner join dwh.customers_dim cd on sf.cust_id=cd.cust_id
+inner join dwh.managers_dim md on md.manager_id = sf.manager_id
+inner join dwh.calendar_dim cal1 on cal1.date_id = sf.order_date_id
+inner join dwh.calendar_dim cal2 on cal2.date_id = sf.ship_date_id;

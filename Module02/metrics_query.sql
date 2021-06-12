@@ -5,7 +5,7 @@ select sum(sales) from dwh.sales_fact sf;
 select sum(profit) from dwh.sales_fact sf;
 
 --Profit Ratio
-select sum(profit)/coalesce(sum(sales),1) as  * 100 from dwh.sales_fact sf;
+select sum(profit)/coalesce(sum(sales),1) * 100 as profit_ratio  from dwh.sales_fact sf;
 
 --Profit per Order
 select order_id, sum(profit) as order_profit from dwh.sales_fact sf
